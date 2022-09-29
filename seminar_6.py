@@ -30,14 +30,14 @@
 # [4, 5, 9]
 # [111, 222, 333]
 
-users = ['user1','user2','user3','user4','user5']
-ids = [4, 5, 9, 14, 7]
-salary = [111,222,333]
+# users = ['user1','user2','user3','user4','user5']
+# ids = [4, 5, 9, 14, 7]
+# salary = [111,222,333]
 
-a, b, c = map(list, zip (users, ids, salary))
-print(a, b, c, sep = '\n')
-a, b, c = map(list, zip(a, b, c))
-print(a, b, c, sep = '\n')
+# a, b, c = map(list, zip (users, ids, salary))
+# print(a, b, c, sep = '\n')
+# a, b, c = map(list, zip(a, b, c))
+# print(a, b, c, sep = '\n')
 
 
 
@@ -60,4 +60,60 @@ print(a, b, c, sep = '\n')
 
 #     (1+2)*3 => 9;
 
-lst = ''
+def parse(s: str) -> list:
+    result = []
+    digit = ""
+    for symbol in s:
+        if symbol.isdigit():
+            digit += symbol
+        elif symbol in ['(', ')']:
+            if digit:
+                result.append(float(digit))
+                digit = ""
+            result.append(symbol)
+        else:
+            if digit:
+                result.append(float(digit))
+                digit = ""
+                result.append(symbol)
+    else:
+        if digit:
+            result.append(float(digit))
+    return result
+
+def calculate(lst: list) -> float:
+    result = 0.0
+    while '*' in lst:
+        index = lst.index('*')
+        result = lst[index - 1] * lst[index + 1]
+        lst = lst[:index - 1] + [result] + lst[index + 2:]
+    while '/' in lst:
+        index = lst.index('/')
+        result = lst[index - 1] / lst[index + 1]
+        lst = lst[:index - 1] + [result] + lst[index + 2:]
+    while '+' in lst:
+        index = lst.index('+')
+        result = lst[index - 1] + lst[index + 1]
+        lst = lst[:index - 1] + [result] + lst[index + 2:]
+    while '-' in lst:
+        index = lst.index('-')
+        result = lst[index - 1] - lst[index + 1]
+        lst = lst[:index - 1] + [result] + lst[index + 2:]
+    return result
+
+
+def brackets(lst:list) -> list:
+    while '(' in lst:
+        opening = lst.index('(')
+        closing = lst.index(')')
+        lst = lst[:opening] + [calculate(lst[opening + 1:closing])] + lst[closing + 1:]
+    return lst
+
+s = "(1+1) + 20"
+result = parse(s)
+print(result)
+result = brackets(result)
+print(result)
+print(calculate(result))
+
+
