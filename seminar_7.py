@@ -55,14 +55,14 @@
 # 14 - Рак
 # 9 - Сунул
 
-a = []
-for i in range(4):
-    a.extend(input().replace('.', '').split())
-b = list(enumerate(a))
-sp = []
-b.sort(key = lambda x: x[1])
-for i in b:
-    if i[1][0].isupper() and i[i] not in sp:
-        print(*(i[0], '-', i[1]))
-        sp.append(i[1])
+# a = []
+# for i in range(4):
+#     a.extend(input().replace('.', '').split())
+# b = list(enumerate(a))
+# sp = []
+# b.sort(key = lambda x: x[1])
+# for i in b:
+#     if i[1][0].isupper() and i[i] not in sp:
+#         print(*(i[0], '-', i[1]))
+#         sp.append(i[1])
  
